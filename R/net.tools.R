@@ -127,4 +127,26 @@ freegeoip <- function(ip, format = ifelse(length(ip) == 1,'list','dataframe')) {
         }
         return(ret)
     }
-} 
+}
+
+#' isPublicIP
+#' Returns TRUE for Public IP and returns FALSE for Private IP
+#'
+#' @param ip 
+#'
+#' @return
+#' Boolean
+#' @export
+#'
+#' @examples
+#' ip <- "0.0.0.0" (Public IP) returns TRUE
+#' ip <- "10.0.0.0" (Private IP) returns FALSE
+isPublicIP <- function(ip) {
+  
+  longIP <- ip2long(ip)
+  return(ifelse(longIP < 167772160 || 
+          (longIP > 184549375 && longIP < 2851995648) || 
+          (longIP > 2852061183 && longIP < 2886729728) || 
+          (longIP > 2887778303 && longIP < 3232235520) || 
+          (longIP > 3232301055), "TRUE", "FALSE"))
+}
